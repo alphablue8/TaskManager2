@@ -1,0 +1,13 @@
+steps:
+#build
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "t", "asia-southeast2-docker.pkg.dev/taskmanager-407412/taskmanager/taskmanager", "."]
+#push
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "asia-southeast2-docker.pkg.dev/taskmanager-407412/taskmanager/taskmanager"]
+#deploy
+- name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  entrypoint: gcloud
+  args: ["run", "deploy", "taskmanager", "--image", "asia-southeast2-docker.pkg.dev/taskmanager-407412/taskmanager/taskmanager", "--region", "asia-southeast2"]
+images:
+- "asia-southeast2-docker.pkg.dev/taskmanager-407412/taskmanager/taskmanager"  
